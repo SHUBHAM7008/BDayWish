@@ -1,36 +1,166 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Happy Birthday Bestie 🎂</title>
+  <title>Start kar 😄</title>
+
   <style>
-    body {
-      background: black;
-      color: orange;
-      text-align: center;
-      font-family: Arial;
-      margin-top: 100px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
-    h1 { font-size: 40px; }
-    p { font-size: 20px; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #667eea, #764ba2, #6a11cb, #2575fc);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      overflow: hidden;
+      color: white;
+    }
+
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .card {
+      width: 360px;
+      padding: 30px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(15px);
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0px);}
+      50% { transform: translateY(-10px);}
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    .msg {
+      margin: 20px 0;
+      min-height: 80px;
+      font-size: 17px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s ease;
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     button {
-      padding: 10px 20px;
-      background: orange;
+      padding: 12px 25px;
       border: none;
+      border-radius: 12px;
+      background: white;
+      color: #333;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #eee;
+    }
+
+    .progress-container {
+      margin-top: 20px;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: white;
+      transition: width 3s linear;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
+
 <body>
 
-<h1>Happy Birthday ❤️</h1>
-<p id="msg">Click below 😄</p>
+<div class="card">
+  <h1>Ready आहेस? 😄</h1>
+  <div class="msg" id="msg">Start दाब… आणि शांत बस 😏</div>
 
-<button onclick="showMsg()">Click Me</button>
+  <button id="startBtn" onclick="start()">Start</button>
+
+  <div class="progress-container">
+    <div class="progress" id="bar"></div>
+  </div>
+</div>
 
 <script>
-function showMsg() {
-  document.getElementById("msg").innerHTML =
-  "You’re annoying, irritating 😤 but still my favorite person 💛<br><br>My biggest headache & happiness ❤️";
+const lines = [
+  "ए ऐक… आधी शांत बस 😄",
+  "आज तू खूप busy असणार… obviously birthday आहे ना 😏",
+  "आणि हो… सगळ्यांसोबत जास्त enjoy करू नकोस 😑",
+  "थोडं attention इथे पण ठेव 😄",
+  "तू कधी कधी खूपच random असतेस 😂",
+  "पण honestly… तेच मजेशीर आहे",
+  "कधी nonsense बोलतेस, कधी smart वाटतेस 😏",
+  "combo भारी आहे तुझा 😄",
+  "आपण कधी argue करतो, कधी हसतो…",
+  "पण vibe always same राहते somehow",
+  "बाकी काही नाही… just बोलायचं होतं 😄",
+  "आजचा दिवस full enjoy कर",
+  "Happy Birthday 🎂"
+];
+let i = 0;
+let interval;
+
+function start() {
+  document.getElementById("startBtn").style.display = "none";
+  showLine();
+  interval = setInterval(showLine, 3000);
+}
+
+function showLine() {
+  const msg = document.getElementById("msg");
+  const bar = document.getElementById("bar");
+
+  msg.classList.remove("show");
+
+  setTimeout(() => {
+    if (i < lines.length) {
+      msg.innerText = lines[i];
+      msg.classList.add("show");
+      bar.style.width = ((i + 1) / lines.length) * 100 + "%";
+      i++;
+    } else {
+      clearInterval(interval);
+      msg.innerText = "बस… आता reply कर 😄";
+      msg.classList.add("show");
+      bar.style.width = "100%";
+    }
+  }, 200);
 }
 </script>
 
